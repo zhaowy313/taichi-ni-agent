@@ -2,14 +2,10 @@
 
 This plan outlines the steps to build the admin API.
 
-## Phase 1: Admin Authentication & Routing
+## Phase 1: Admin Authentication & Routing [checkpoint: fdd09f5]
 - [x] Task: Configure Admin Secret. 7f41620
-    - [ ] Update `wrangler.toml` (vars) and create `.dev.vars` for local testing with an `ADMIN_SECRET`.
-    - [ ] Update `src/types.ts` to include the new variable.
 - [x] Task: Implement Admin Middleware. a94388b
-    - [ ] Create `src/admin.ts` to handle admin routing and auth checks.
-    - [ ] Integrate admin router into `src/index.ts`.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Admin Authentication & Routing' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Admin Authentication & Routing' (Protocol in workflow.md) fdd09f5
 
 ## Phase 2: Management Logic
 - [ ] Task: Implement User Creation.
