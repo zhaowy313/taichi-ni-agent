@@ -1,7 +1,7 @@
 # Implementation Plan: RAG Retrieval & Chat Generation
 
 ## Phase 1: Retrieval Logic
-- [ ] Task: Implement `retrieveContext` function.
+- [x] Task: Implement `retrieveContext` function. 63824d5
     - [ ] Generate embedding for query.
     - [ ] Query Vectorize index.
     - [ ] Filter/Sort results (if necessary) and extract text.
