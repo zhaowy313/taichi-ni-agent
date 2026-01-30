@@ -2,16 +2,10 @@
 
 This plan outlines the steps to build the RAG foundation.
 
-## Phase 1: Infrastructure Configuration
+## Phase 1: Infrastructure Configuration [checkpoint: 9c49443]
 - [x] Task: Configure Wrangler for Vectorize. 5f6a075
-    - [ ] Add `[[vectorize]]` binding to `wrangler.toml`.
-    - [ ] Update `src/types.ts` with `VectorizeIndex` binding.
-    - [ ] Document the `wrangler vectorize create` command in `DEPLOY.md`.
 - [x] Task: Implement Embedding Helper. 6753fd5
-    - [ ] Create `src/ai.ts`.
-    - [ ] Implement `generateEmbedding(text, env)` using `env.AI.run('@cf/baai/bge-m3', ...)`.
-    - [ ] Add unit tests for the embedding helper (mocking `env.AI`).
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Infrastructure Configuration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Infrastructure Configuration' (Protocol in workflow.md) 9c49443
 
 ## Phase 2: Ingestion Pipeline
 - [ ] Task: Create Ingestion Endpoint (`POST /admin/ingest`).
