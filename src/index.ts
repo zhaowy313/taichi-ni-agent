@@ -59,7 +59,7 @@ export default {
     let systemPrompt = 'You are a helpful assistant.';
     if (lastUserMessage) {
       const context = await retrieveContext(lastUserMessage, env);
-      console.log('Retrieved Context:', context);
+      console.log(`Retrieved ${context.length} documents for context.`);
       systemPrompt = constructSystemPrompt(context);
     }
 

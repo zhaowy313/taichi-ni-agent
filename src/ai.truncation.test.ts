@@ -4,7 +4,10 @@ import { constructSystemPrompt } from './ai';
 describe('constructSystemPrompt (Truncation)', () => {
   it('should truncate context if it exceeds limit', () => {
     const longText = 'A'.repeat(3000);
-    const context = [longText, longText, longText]; // 9000 chars total
+    const context = [
+      { text: longText, metadata: { title: 'T1' } },
+      { text: longText, metadata: { title: 'T2' } }
+    ]; 
     const prompt = constructSystemPrompt(context);
     
     // Total prompt length should be reasonable (limit is roughly 4000-5000 in implementation)

@@ -1,3 +1,12 @@
+export interface Document {
+  text: string;
+  metadata?: {
+    title?: string;
+    category?: string;
+    [key: string]: any;
+  };
+}
+
 export interface Env {
   DB: D1Database;
   KV: KVNamespace;

@@ -42,7 +42,10 @@ describe('retrieveContext', () => {
     // Verify
     expect(mockEnv.AI.run).toHaveBeenCalledWith('@cf/baai/bge-m3', { text: query });
     expect(mockEnv.VECTORIZE_INDEX.query).toHaveBeenCalledWith(mockEmbedding, { topK: 5, returnMetadata: true });
-    expect(results).toEqual(['Document 1 content', 'Document 2 content']);
+    expect(results).toEqual([
+      { text: 'Document 1 content', metadata: { text: 'Document 1 content' } },
+      { text: 'Document 2 content', metadata: { text: 'Document 2 content' } },
+    ]);
   });
 
   it('should return empty array if no matches found', async () => {

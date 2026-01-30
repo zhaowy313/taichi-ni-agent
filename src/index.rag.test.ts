@@ -65,6 +65,6 @@ describe('Worker Fetch Handler (Chat RAG)', () => {
 
     // Verify
     expect(ai.retrieveContext).toHaveBeenCalledWith('Tell me about Tai Chi', mockEnv);
-    expect(consoleSpy).toHaveBeenCalledWith('Retrieved Context:', mockContext);
+    expect(consoleSpy).toHaveBeenCalledWith('Retrieved 1 documents for context.');
   });
 });

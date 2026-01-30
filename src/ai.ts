@@ -1,4 +1,4 @@
-import { Env } from './types';
+import { Env, Document } from './types';
 
 export async function generateEmbedding(text: string, env: Env): Promise<number[]> {
   const response = await env.AI.run('@cf/baai/bge-m3', { text });
@@ -11,7 +11,7 @@ export async function generateEmbedding(text: string, env: Env): Promise<number[
   return data[0];
 }
 
-export async function retrieveContext(query: string, env: Env): Promise<string[]> {
+export async function retrieveContext(query: string, env: Env): Promise<Document[]> {
   const embedding = await generateEmbedding(query, env);
   
   const results = await env.VECTORIZE_INDEX.query(embedding, {
@@ -20,25 +20,31 @@ export async function retrieveContext(query: string, env: Env): Promise<string[]
   });
 
   return results.matches
-    .map(match => match.metadata?.text as string)
-    .filter(text => !!text);
+    .map(match => ({
+      text: match.metadata?.text as string,
+      metadata: match.metadata as any
+    }))
+    .filter(doc => !!doc.text);
 }
 
-export function constructSystemPrompt(context: string[]): string {
+export function constructSystemPrompt(context: Document[]): string {
   const MAX_CONTEXT_LENGTH = 4000;
   let combinedContext = '';
   let currentLength = 0;
 
-  for (const text of context) {
-    if (currentLength + text.length > MAX_CONTEXT_LENGTH) {
+  for (const doc of context) {
+    const sourceTag = doc.metadata?.title ? ` [Source: ${doc.metadata.title}]` : '';
+    const textToIncorporate = `${doc.text}${sourceTag}`;
+
+    if (currentLength + textToIncorporate.length > MAX_CONTEXT_LENGTH) {
       const remainingSpace = MAX_CONTEXT_LENGTH - currentLength;
-      if (remainingSpace > 50) { // Only add partial if enough space
-        combinedContext += `- ${text.substring(0, remainingSpace)}... [truncated]\n`;
+      if (remainingSpace > 50) { 
+        combinedContext += `- ${doc.text.substring(0, remainingSpace)}... [truncated]${sourceTag}\n`;
       }
       break;
     }
-    combinedContext += `- ${text}\n`;
-    currentLength += text.length;
+    combinedContext += `- ${textToIncorporate}\n`;
+    currentLength += textToIncorporate.length;
   }
 
   const contextText = combinedContext.trim() || '(No relevant context found)';
@@ -54,5 +60,6 @@ Instructions:
 1. Use the provided context to answer the user's question.
 2. If the answer is not in the context, politely admit you do not know, but you can offer general encouragement based on Tai Chi principles if appropriate. Do not make up medical advice.
 3. Keep your tone calm, wise, and supportive.
+4. When you use information from the context, please cite the source title if provided (e.g., "According to [Title]...").
 `.trim();
 }

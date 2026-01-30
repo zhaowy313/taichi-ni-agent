@@ -51,7 +51,7 @@ describe('Worker Fetch Handler (Multi-Provider RAG)', () => {
     };
     (mockEnv.DB.prepare as any).mockReturnValue(mockStmt);
 
-    vi.mocked(ai.retrieveContext).mockResolvedValue(['Tai Chi is good.']);
+    vi.mocked(ai.retrieveContext).mockResolvedValue([{ text: 'Tai Chi is good.', metadata: { title: 'Book' } }]);
     vi.mocked(ai.constructSystemPrompt).mockReturnValue('System Prompt');
 
     // Mock Gateway Call
