@@ -3,6 +3,7 @@ import { verifyApiKey } from './auth';
 import { calculateCost, deductBalance } from './billing';
 import { handleAdminRequest } from './admin';
 import { handleUserRequest } from './user_api';
+import { retrieveContext } from './ai';
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -45,6 +46,17 @@ export default {
 
     if (!userRecord || userRecord.balance < 0.05) {
       return new Response('Payment Required', { status: 402 });
+    }
+
+    // Parse Request Body
+    const requestBody = await request.clone().json() as any;
+    const messages = requestBody.messages || [];
+    const lastUserMessage = messages.reverse().find((m: any) => m.role === 'user')?.content;
+
+    // Retrieve Context
+    if (lastUserMessage) {
+      const context = await retrieveContext(lastUserMessage, env);
+      console.log('Retrieved Context:', context);
     }
 
     // Proxy to Workers AI or AI Gateway
