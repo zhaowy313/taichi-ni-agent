@@ -1,0 +1,22 @@
+# Implementation Plan: RAG Retrieval & Chat Generation
+
+## Phase 1: Retrieval Logic
+- [ ] Task: Implement `retrieveContext` function.
+    - [ ] Generate embedding for query.
+    - [ ] Query Vectorize index.
+    - [ ] Filter/Sort results (if necessary) and extract text.
+- [ ] Task: Update `handleUserRequest` / `fetch` to use retrieval.
+    - [ ] Modify `src/index.ts` to call retrieval before generating response.
+    - [ ] Log retrieved documents for debugging (temporarily).
+
+## Phase 2: LLM Integration
+- [ ] Task: Construct System Prompt.
+    - [ ] Create a template function that combines system instructions, retrieved context, and user query.
+- [ ] Task: Integrate Workers AI (Qwen 2.5).
+    - [ ] Replace placeholder response with actual `env.AI.run` call.
+    - [ ] Map AI response to OpenAI format.
+- [ ] Task: Conductor - User Manual Verification 'Phase 2: LLM Integration' (Protocol in workflow.md)
+
+## Phase 3: Refinement
+- [ ] Task: Optimize context window usage (truncate if too long).
+- [ ] Task: Add source citations (optional MVP feature: append "Source: [Title]" to response).
