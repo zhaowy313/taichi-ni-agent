@@ -12,7 +12,7 @@ This plan outlines the steps to build the RAG foundation.
     - [ ] Receive text content and metadata (title, category).
     - [ ] Generate embedding.
     - [ ] Insert vector + metadata into `env.VECTORIZE_INDEX`.
-- [ ] Task: Create Ingestion Script.
+- [x] Task: Create Ingestion Script. 91e81cc
     - [ ] Create `scripts/ingest_docs.ts` (or Python as per spec, but TS shares types better) to verify the endpoint.
     - [ ] *Self-correction:* The spec mentions Python CLI, but we are building a web-based agent. We'll build a TypeScript script that calls the Worker's admin endpoint.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Ingestion Pipeline' (Protocol in workflow.md)
