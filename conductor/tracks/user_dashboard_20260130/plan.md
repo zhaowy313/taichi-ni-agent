@@ -8,7 +8,7 @@ This plan outlines the steps to build and deploy the user dashboard.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: API Extensions for User Access' (Protocol in workflow.md) 14cd145
 
 ## Phase 2: Frontend Implementation
-- [ ] Task: Initialize Next.js Project.
+- [x] Task: Initialize Next.js Project. b0c2190
     -   Scaffold a new Next.js app in `dashboard/`.
     -   Configure Tailwind CSS.
 - [ ] Task: Implement Login Page.
