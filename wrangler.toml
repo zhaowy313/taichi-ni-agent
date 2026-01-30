@@ -11,4 +11,7 @@ database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" # TODO: Replace with actual
 # KV Namespace Binding
 [[kv_namespaces]]
 binding = "KV"
-id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" # TODO: Replace with actual KV Namespace ID
+
+# Environment Variables
+[vars]
+ADMIN_SECRET = "change-me-in-prod"
