@@ -4,6 +4,7 @@ import { calculateCost, deductBalance } from './billing';
 import { handleAdminRequest } from './admin';
 import { handleUserRequest } from './user_api';
 import { retrieveContext, constructSystemPrompt } from './ai';
+import { callAI } from './llm_gateway';
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -52,6 +53,7 @@ export default {
     const requestBody = await request.clone().json() as any;
     const messages = requestBody.messages || [];
     const lastUserMessage = messages.reverse().find((m: any) => m.role === 'user')?.content;
+    const requestedModel = requestBody.model || 'gpt-4o'; // Default to GPT-4o
 
     // Retrieve Context and Construct Prompt
     let systemPrompt = 'You are a helpful assistant.';
@@ -64,51 +66,33 @@ export default {
     // Construct Messages for LLM
     const llmMessages = [
       { role: 'system', content: systemPrompt },
-      ...requestBody.messages // Pass through original messages (careful with duplication if we extracted last message, but usually users send full history)
-        .filter((m: any) => m.role !== 'system') // Filter out any user-provided system prompts to enforce ours
+      ...requestBody.messages // Pass through original messages
+        .filter((m: any) => m.role !== 'system') 
     ];
     
-    // Note: If requestBody.messages contains the last user message, we are keeping it.
+    // Run Inference via AI Gateway
+    let response;
+    try {
+      response = await callAI(requestedModel, llmMessages, env);
+    } catch (error: any) {
+      console.error('AI Gateway Error:', error);
+      return new Response(`AI Provider Error: ${error.message}`, { status: 502 });
+    }
 
-    // Run Inference
-    const model = '@cf/qwen/qwen1.5-72b-chat';
-    const response = await env.AI.run(model, {
-      messages: llmMessages,
-      stream: false, // MVP non-streaming
-    }) as any;
-
-    // Construct OpenAI-compatible Response
-    const chatResponse = {
-      id: `chatcmpl-${crypto.randomUUID()}`,
-      object: 'chat.completion',
-      created: Math.floor(Date.now() / 1000),
-      model: model,
-      choices: [
-        {
-          index: 0,
-          message: {
-            role: 'assistant',
-            content: response.response,
-          },
-          finish_reason: 'stop',
-        },
-      ],
-      usage: {
-        // Approximate token counting if not provided by CF AI
-        prompt_tokens: JSON.stringify(llmMessages).length / 4, 
-        completion_tokens: (response.response || '').length / 4,
-        total_tokens: 0, // Sum above
-      },
+    // Determine usage
+    // Standard OpenAI response includes 'usage'
+    const usage = response.usage || {
+      prompt_tokens: JSON.stringify(llmMessages).length / 4,
+      completion_tokens: (response.choices?.[0]?.message?.content || '').length / 4,
+      total_tokens: 0
     };
-    
-    // Fix usage totals
-    chatResponse.usage.total_tokens = chatResponse.usage.prompt_tokens + chatResponse.usage.completion_tokens;
+    usage.total_tokens = usage.prompt_tokens + usage.completion_tokens;
 
     // Deduct balance (background task)
-    const cost = calculateCost(chatResponse.usage.prompt_tokens, chatResponse.usage.completion_tokens);
+    const cost = calculateCost(usage.prompt_tokens, usage.completion_tokens);
     ctx.waitUntil(deductBalance(user.user_id, cost, env.DB));
 
-    return new Response(JSON.stringify(chatResponse), {
+    return new Response(JSON.stringify(response), {
       headers: { 'Content-Type': 'application/json' },
     });
   },
