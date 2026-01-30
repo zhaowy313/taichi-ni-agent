@@ -11,4 +11,4 @@
 
 ## Phase 3: Refinement
 - [x] Task: Optimize context window usage (truncate if too long). 8335dee
-- [ ] Task: Add source citations (optional MVP feature: append "Source: [Title]" to response).
+- [x] Task: Add source citations (optional MVP feature: append "Source: [Title]" to response). cc576cd
