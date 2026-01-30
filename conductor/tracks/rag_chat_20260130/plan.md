@@ -6,7 +6,7 @@
 
 ## Phase 2: LLM Integration (Multi-Provider)
 - [x] Task: Construct System Prompt. 19b8840
-- [ ] Task: Implement Multi-Provider Routing Logic.
+- [x] Task: Implement Multi-Provider Routing Logic. 9934756
     - [ ] Create `src/llm_gateway.ts` to handle routing via CF AI Gateway.
     - [ ] Implement `callProvider(provider, model, messages)` function.
     - [ ] Support OpenAI, Gemini, and DeepSeek (via custom fetch or CF Gateway Universal Endpoint).
