@@ -12,6 +12,15 @@ database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" # TODO: Replace with actual
 [[kv_namespaces]]
 binding = "KV"
 
+# Vectorize Index Binding
+[[vectorize]]
+binding = "VECTORIZE_INDEX"
+index_name = "taichi-knowledge-base"
+
+# Workers AI Binding
+[ai]
+binding = "AI"
+
 # Environment Variables
 [vars]
 ADMIN_SECRET = "change-me-in-prod"

@@ -48,6 +48,20 @@ binding = "KV"
 id = "<PASTE_YOUR_KV_ID_HERE>"
 ```
 
+### 2.3 Create Vectorize Index
+
+```bash
+npx wrangler vectorize create taichi-knowledge-base --dimensions=1024 --metric=cosine
+```
+
+**Action:** Copy the configuration output and ensure your `wrangler.toml` matches. It should look like:
+
+```toml
+[[vectorize]]
+binding = "VECTORIZE_INDEX"
+index_name = "taichi-knowledge-base"
+```
+
 ## Step 3: Initialize Database Schema
 
 Apply the schema to your remote D1 database:
