@@ -8,14 +8,7 @@ This plan outlines the steps to build the admin API.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Admin Authentication & Routing' (Protocol in workflow.md) fdd09f5
 
 ## Phase 2: Management Logic
-- [ ] Task: Implement User Creation.
-    - [ ] Add logic to insert new user into D1 `users` table.
-    - [ ] Return the new `user_id`.
-- [ ] Task: Implement Key Generation.
-    - [ ] Create utility to generate secure random keys (`sk-taichi-...`).
-    - [ ] Hash the key and store in D1 `api_keys`.
-    - [ ] Cache active status in KV.
-    - [ ] Return the *raw* key to the admin (one-time view).
-- [ ] Task: Implement Balance Top-up.
-    - [ ] Add logic to update user balance in D1.
+- [x] Task: Implement User Creation. a45667c
+- [x] Task: Implement Key Generation. a45667c
+- [x] Task: Implement Balance Top-up. a45667c
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Management Logic' (Protocol in workflow.md)
