@@ -12,7 +12,7 @@ This plan outlines the steps to build the proxy shell and billing system using C
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Authentication & Proxy Core' (Protocol in workflow.md) 87d4ba6
 
 ## Phase 3: Billing & Token Tracking
-- [ ] Task: Implement token counting and balance deduction.
+- [x] Task: Implement token counting and balance deduction. ebeec6d
     - [ ] Extract `usage` data from the AI response.
     - [ ] Calculate cost based on predefined rates.
     - [ ] Update user balance in D1 transactionally.
