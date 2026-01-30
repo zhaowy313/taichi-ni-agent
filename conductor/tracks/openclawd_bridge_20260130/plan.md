@@ -8,11 +8,6 @@ This plan outlines the steps to build and verify the OpenClawd integration.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Skill Structure & Key Management' (Protocol in workflow.md) d4c5ad3
 
 ## Phase 2: Message Bridging & Proxy Integration
-- [ ] Task: Implement Proxy Request Logic.
-    - [ ] In `bridge.js`, implement `fetch` call to the Cloudflare Proxy.
-    - [ ] Construct the request payload (model, messages).
-    - [ ] Handle 401/402 responses with specific user prompts.
-- [ ] Task: Implement Main `onMessage` Handler.
-    - [ ] Wire up key check -> proxy call -> response reply.
-    - [ ] Add unit tests for the full flow (mocking `fetch`).
+- [x] Task: Implement Proxy Request Logic. 1f3ba0f
+- [x] Task: Implement Main `onMessage` Handler. 1f3ba0f
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Message Bridging & Proxy Integration' (Protocol in workflow.md)
