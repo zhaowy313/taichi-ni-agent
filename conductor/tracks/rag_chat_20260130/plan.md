@@ -10,5 +10,5 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: LLM Integration' (Protocol in workflow.md) 911a1b4
 
 ## Phase 3: Refinement
-- [ ] Task: Optimize context window usage (truncate if too long).
+- [x] Task: Optimize context window usage (truncate if too long). 8335dee
 - [ ] Task: Add source citations (optional MVP feature: append "Source: [Title]" to response).
