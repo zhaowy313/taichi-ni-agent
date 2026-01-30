@@ -25,9 +25,23 @@ export async function retrieveContext(query: string, env: Env): Promise<string[]
 }
 
 export function constructSystemPrompt(context: string[]): string {
-  const contextText = context.length > 0 
-    ? context.map(text => `- ${text}`).join('\n')
-    : '(No relevant context found)';
+  const MAX_CONTEXT_LENGTH = 4000;
+  let combinedContext = '';
+  let currentLength = 0;
+
+  for (const text of context) {
+    if (currentLength + text.length > MAX_CONTEXT_LENGTH) {
+      const remainingSpace = MAX_CONTEXT_LENGTH - currentLength;
+      if (remainingSpace > 50) { // Only add partial if enough space
+        combinedContext += `- ${text.substring(0, remainingSpace)}... [truncated]\n`;
+      }
+      break;
+    }
+    combinedContext += `- ${text}\n`;
+    currentLength += text.length;
+  }
+
+  const contextText = combinedContext.trim() || '(No relevant context found)';
 
   return `
 You are a Tai Chi master and expert in Ni Haixia's TCM philosophy.
