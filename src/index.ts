@@ -1,5 +1,6 @@
 import { Env } from './types';
 import { verifyApiKey } from './auth';
+import { calculateCost, deductBalance } from './billing';
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -25,9 +26,18 @@ export default {
       return new Response('Unauthorized', { status: 401 });
     }
 
+    // Check balance
+    const userRecord = await env.DB.prepare('SELECT balance FROM users WHERE id = ?')
+      .bind(user.user_id)
+      .first<{ balance: number }>();
+
+    if (!userRecord || userRecord.balance < 0.05) {
+      return new Response('Payment Required', { status: 402 });
+    }
+
     // Proxy to Workers AI or AI Gateway
     // For now, we'll return a placeholder success response
-    return new Response(JSON.stringify({
+    const placeholderResponse = {
       id: 'chatcmpl-placeholder',
       object: 'chat.completion',
       created: Math.floor(Date.now() / 1000),
@@ -47,7 +57,13 @@ export default {
         completion_tokens: 20,
         total_tokens: 30,
       },
-    }), {
+    };
+
+    // Deduct balance (background task)
+    const cost = calculateCost(placeholderResponse.usage.prompt_tokens, placeholderResponse.usage.completion_tokens);
+    ctx.waitUntil(deductBalance(user.user_id, cost, env.DB));
+
+    return new Response(JSON.stringify(placeholderResponse), {
       headers: { 'Content-Type': 'application/json' },
     });
   },

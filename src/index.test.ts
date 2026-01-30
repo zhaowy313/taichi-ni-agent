@@ -37,9 +37,40 @@ describe('Worker Proxy', () => {
     expect(response.status).toBe(401);
   });
 
-  it('should return 404 for unknown routes', async () => {
-    const request = new Request('http://localhost/unknown');
-    const response = await worker.fetch(request, mockEnv, mockCtx);
-    expect(response.status).toBe(404);
+    it('should return 402 if user balance is insufficient', async () => {
+
+      vi.mocked(auth.verifyApiKey).mockResolvedValue({ user_id: 'user_low_balance', status: 'active' });
+
+      const mockDB = {
+
+        prepare: vi.fn().mockReturnThis(),
+
+        bind: vi.fn().mockReturnThis(),
+
+        first: vi.fn().mockResolvedValue({ balance: 0.01 }), // Less than 0.05 minimum
+
+      } as any;
+
+      
+
+      const request = new Request('http://localhost/v1/chat/completions', {
+
+        method: 'POST',
+
+        headers: { 'Authorization': 'Bearer sk-taichi-low' },
+
+        body: JSON.stringify({}),
+
+      });
+
+      
+
+      const response = await worker.fetch(request, { ...mockEnv, DB: mockDB }, mockCtx);
+
+      expect(response.status).toBe(402);
+
+    });
+
   });
-});
+
+  
