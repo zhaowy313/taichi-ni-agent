@@ -5,7 +5,7 @@
     - [ ] Generate embedding for query.
     - [ ] Query Vectorize index.
     - [ ] Filter/Sort results (if necessary) and extract text.
-- [ ] Task: Update `handleUserRequest` / `fetch` to use retrieval.
+- [x] Task: Update `handleUserRequest` / `fetch` to use retrieval. a232617
     - [ ] Modify `src/index.ts` to call retrieval before generating response.
     - [ ] Log retrieved documents for debugging (temporarily).
 
