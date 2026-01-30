@@ -10,7 +10,7 @@ This plan outlines the steps to build the proxy shell and billing system using C
 - [x] Task: Implement API Key verification logic. 79ee5f1
     - [ ] Write utility to hash incoming keys and check against KV/D1.
     - [ ] Create middleware to intercept requests and validate the `Authorization` header.
-- [ ] Task: Implement the OpenAI-compatible proxy shell.
+- [x] Task: Implement the OpenAI-compatible proxy shell. e6a0286
     - [ ] Create the `/v1/chat/completions` route.
     - [ ] Implement request forwarding to Cloudflare Workers AI or AI Gateway.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Authentication & Proxy Core' (Protocol in workflow.md)
