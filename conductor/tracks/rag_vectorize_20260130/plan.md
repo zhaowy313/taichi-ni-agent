@@ -7,7 +7,7 @@ This plan outlines the steps to build the RAG foundation.
     - [ ] Add `[[vectorize]]` binding to `wrangler.toml`.
     - [ ] Update `src/types.ts` with `VectorizeIndex` binding.
     - [ ] Document the `wrangler vectorize create` command in `DEPLOY.md`.
-- [ ] Task: Implement Embedding Helper.
+- [x] Task: Implement Embedding Helper. 6753fd5
     - [ ] Create `src/ai.ts`.
     - [ ] Implement `generateEmbedding(text, env)` using `env.AI.run('@cf/baai/bge-m3', ...)`.
     - [ ] Add unit tests for the embedding helper (mocking `env.AI`).
