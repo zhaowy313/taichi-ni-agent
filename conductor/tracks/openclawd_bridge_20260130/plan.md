@@ -2,16 +2,10 @@
 
 This plan outlines the steps to build and verify the OpenClawd integration.
 
-## Phase 1: Skill Structure & Key Management
+## Phase 1: Skill Structure & Key Management [checkpoint: d4c5ad3]
 - [x] Task: Create Skill Directory Structure. bd4ae10
-    - [ ] Create `skills/taichi-ni-bridge/` directory.
-    - [ ] Create `SKILL.md` with metadata (name, description, triggers).
 - [x] Task: Implement Command Handling & Key Storage. 9347333
-    - [ ] Create `bridge.js` skeleton.
-    - [ ] Implement logic to detect `/setkey` command.
-    - [ ] Store API key in user context/state.
-    - [ ] Add unit tests for key storage logic.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Skill Structure & Key Management' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Skill Structure & Key Management' (Protocol in workflow.md) d4c5ad3
 
 ## Phase 2: Message Bridging & Proxy Integration
 - [ ] Task: Implement Proxy Request Logic.
