@@ -8,7 +8,7 @@ This plan outlines the steps to build the RAG foundation.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Infrastructure Configuration' (Protocol in workflow.md) 9c49443
 
 ## Phase 2: Ingestion Pipeline
-- [ ] Task: Create Ingestion Endpoint (`POST /admin/ingest`).
+- [x] Task: Create Ingestion Endpoint (`POST /admin/ingest`). 7bbf1be
     - [ ] Receive text content and metadata (title, category).
     - [ ] Generate embedding.
     - [ ] Insert vector + metadata into `env.VECTORIZE_INDEX`.
