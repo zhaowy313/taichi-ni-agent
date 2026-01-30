@@ -20,8 +20,6 @@ This plan outlines the steps to build and deploy the user dashboard.
     -   Implement "Generate Key" button.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Frontend Implementation' (Protocol in workflow.md)
 
-## Phase 3: Deployment
+## Phase 3: Deployment [checkpoint: d152b28]
 - [x] Task: Deploy to Cloudflare Pages. 44dbf64
-    -   Configure Wrangler for Pages deployment.
-    -   Deploy and verify connection to the Worker API.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Deployment' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Deployment' (Protocol in workflow.md) d152b28
