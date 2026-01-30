@@ -32,12 +32,55 @@ describe('Admin Middleware', () => {
     expect(response.status).toBe(404);
   });
 
-  it('should return 200 for known admin routes (placeholder)', async () => {
-    const request = new Request('http://localhost/admin/users', {
-      method: 'POST',
-      headers: { 'X-Admin-Key': 'super-secret-key' },
+  describe('Management Logic', () => {
+    const mockDB = {
+      prepare: vi.fn().mockReturnThis(),
+      bind: vi.fn().mockReturnThis(),
+      run: vi.fn(),
+      first: vi.fn(),
+    } as any;
+
+    const mockKV = {
+      put: vi.fn(),
+    } as any;
+
+    it('should create a user and return user_id', async () => {
+      mockDB.run.mockResolvedValue({ success: true });
+      const request = new Request('http://localhost/admin/users', {
+        method: 'POST',
+        headers: { 'X-Admin-Key': 'super-secret-key' },
+        body: JSON.stringify({ user_id: 'test-user' }),
+      });
+      const response = await handleAdminRequest(request, { ...mockEnv, DB: mockDB });
+      expect(response.status).toBe(201);
+      const data = await response.json();
+      expect(data.user_id).toBe('test-user');
     });
-    const response = await handleAdminRequest(request, mockEnv);
-    expect(response.status).toBe(200); // Or whatever success code we set initially
+
+    it('should generate a key and return raw key', async () => {
+      mockDB.run.mockResolvedValue({ success: true });
+      const request = new Request('http://localhost/admin/keys', {
+        method: 'POST',
+        headers: { 'X-Admin-Key': 'super-secret-key' },
+        body: JSON.stringify({ user_id: 'test-user' }),
+      });
+      const response = await handleAdminRequest(request, { ...mockEnv, DB: mockDB, KV: mockKV });
+      expect(response.status).toBe(201);
+      const data = await response.json();
+      expect(data.key).toContain('sk-taichi-');
+    });
+
+    it('should update user balance', async () => {
+      mockDB.run.mockResolvedValue({ success: true });
+      const request = new Request('http://localhost/admin/credit', {
+        method: 'POST',
+        headers: { 'X-Admin-Key': 'super-secret-key' },
+        body: JSON.stringify({ user_id: 'test-user', amount: 10.0 }),
+      });
+      const response = await handleAdminRequest(request, { ...mockEnv, DB: mockDB });
+      expect(response.status).toBe(200);
+      const data = await response.json();
+      expect(data.success).toBe(true);
+    });
   });
 });
