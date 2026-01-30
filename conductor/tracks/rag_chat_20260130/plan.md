@@ -10,7 +10,7 @@
     - [ ] Log retrieved documents for debugging (temporarily).
 
 ## Phase 2: LLM Integration
-- [ ] Task: Construct System Prompt.
+- [x] Task: Construct System Prompt. 19b8840
     - [ ] Create a template function that combines system instructions, retrieved context, and user query.
 - [ ] Task: Integrate Workers AI (Qwen 2.5).
     - [ ] Replace placeholder response with actual `env.AI.run` call.
