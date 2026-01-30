@@ -1,8 +1,0 @@
-{
-  "track_id": "proxy_infra_20260130",
-  "type": "feature",
-  "status": "new",
-  "created_at": "2026-01-30T10:00:00Z",
-  "updated_at": "2026-01-30T10:00:00Z",
-  "description": "Build the core Cloudflare Worker infrastructure, including the OpenAI-compatible proxy shell, API key authentication with D1/KV, and token-based billing logic."
-}

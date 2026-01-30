@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { getUser, generateApiKey } from '@/lib/api';
+import { User } from '@/lib/types';
 
 export default function DashboardPage() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -16,38 +17,19 @@ export default function DashboardPage() {
       return;
     }
 
-    fetchUserData(token);
+    getUser(token)
+      .then(setUser)
+      .catch(() => router.push('/login'))
+      .finally(() => setLoading(false));
   }, []);
-
-  const fetchUserData = async (token: string) => {
-    try {
-      const res = await fetch('/api/me', {
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setUser(data);
-      } else {
-        router.push('/login');
-      }
-    } catch (err) {
-      setError('Failed to fetch user data');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleGenerateKey = async () => {
     const token = localStorage.getItem('token');
-    try {
-      const res = await fetch('/api/me/key', {
-        method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
+    if (!token) return;
 
-      if (res.ok) {
-        const { key } = await res.json();
+    try {
+      const { key } = await generateApiKey(token);
+      if (user) {
         setUser({ ...user, apiKey: key });
       }
     } catch (err) {
@@ -85,7 +67,7 @@ export default function DashboardPage() {
                   {user.apiKey}
                 </code>
                 <button 
-                  onClick={() => { navigator.clipboard.writeText(user.apiKey); alert('Copied!'); }}
+                  onClick={() => { navigator.clipboard.writeText(user.apiKey || ''); alert('Copied!'); }}
                   className="bg-gray-200 px-3 py-2 rounded hover:bg-gray-300 transition"
                 >
                   Copy

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { login } from '@/lib/api';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -14,21 +15,11 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (res.ok) {
-        const { token } = await res.json();
-        localStorage.setItem('token', token);
-        router.push('/');
-      } else {
-        setError('Invalid credentials');
-      }
+      const { token } = await login(email, password);
+      localStorage.setItem('token', token);
+      router.push('/');
     } catch (err) {
-      setError('An error occurred. Please try again.');
+      setError(err instanceof Error ? err.message : 'Login failed');
     }
   };
 

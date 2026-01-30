@@ -1,4 +1,4 @@
-# Track proxy_infra_20260130 Context
+# Track rag_vectorize_20260130 Context
 
 - [Specification](./spec.md)
 - [Implementation Plan](./plan.md)
