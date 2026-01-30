@@ -3,7 +3,7 @@
 This plan outlines the steps to build the proxy shell and billing system using Cloudflare Workers.
 
 ## Phase 1: Environment & Schema Setup
-- [ ] Task: Initialize Wrangler project and define D1 database schema.
+- [x] Task: Initialize Wrangler project and define D1 database schema. 9237234
     - [ ] Initialize a new Cloudflare Workers project with TypeScript.
     - [ ] Create D1 schema for `users` (id, balance) and `api_keys` (hash, user_id, status).
     - [ ] Configure `wrangler.toml` with D1 and KV bindings.
