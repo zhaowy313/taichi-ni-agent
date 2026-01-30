@@ -3,7 +3,7 @@ import { verifyApiKey } from './auth';
 import { calculateCost, deductBalance } from './billing';
 import { handleAdminRequest } from './admin';
 import { handleUserRequest } from './user_api';
-import { retrieveContext } from './ai';
+import { retrieveContext, constructSystemPrompt } from './ai';
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -53,41 +53,62 @@ export default {
     const messages = requestBody.messages || [];
     const lastUserMessage = messages.reverse().find((m: any) => m.role === 'user')?.content;
 
-    // Retrieve Context
+    // Retrieve Context and Construct Prompt
+    let systemPrompt = 'You are a helpful assistant.';
     if (lastUserMessage) {
       const context = await retrieveContext(lastUserMessage, env);
       console.log('Retrieved Context:', context);
+      systemPrompt = constructSystemPrompt(context);
     }
 
-    // Proxy to Workers AI or AI Gateway
-    // For now, we'll return a placeholder success response
-    const placeholderResponse = {
-      id: 'chatcmpl-placeholder',
+    // Construct Messages for LLM
+    const llmMessages = [
+      { role: 'system', content: systemPrompt },
+      ...requestBody.messages // Pass through original messages (careful with duplication if we extracted last message, but usually users send full history)
+        .filter((m: any) => m.role !== 'system') // Filter out any user-provided system prompts to enforce ours
+    ];
+    
+    // Note: If requestBody.messages contains the last user message, we are keeping it.
+
+    // Run Inference
+    const model = '@cf/qwen/qwen1.5-72b-chat';
+    const response = await env.AI.run(model, {
+      messages: llmMessages,
+      stream: false, // MVP non-streaming
+    }) as any;
+
+    // Construct OpenAI-compatible Response
+    const chatResponse = {
+      id: `chatcmpl-${crypto.randomUUID()}`,
       object: 'chat.completion',
       created: Math.floor(Date.now() / 1000),
-      model: 'llama-3.3-70b-instruct',
+      model: model,
       choices: [
         {
           index: 0,
           message: {
             role: 'assistant',
-            content: 'This is a placeholder response from the TaiChi-NiHaixia Agent proxy.',
+            content: response.response,
           },
           finish_reason: 'stop',
         },
       ],
       usage: {
-        prompt_tokens: 10,
-        completion_tokens: 20,
-        total_tokens: 30,
+        // Approximate token counting if not provided by CF AI
+        prompt_tokens: JSON.stringify(llmMessages).length / 4, 
+        completion_tokens: (response.response || '').length / 4,
+        total_tokens: 0, // Sum above
       },
     };
+    
+    // Fix usage totals
+    chatResponse.usage.total_tokens = chatResponse.usage.prompt_tokens + chatResponse.usage.completion_tokens;
 
     // Deduct balance (background task)
-    const cost = calculateCost(placeholderResponse.usage.prompt_tokens, placeholderResponse.usage.completion_tokens);
+    const cost = calculateCost(chatResponse.usage.prompt_tokens, chatResponse.usage.completion_tokens);
     ctx.waitUntil(deductBalance(user.user_id, cost, env.DB));
 
-    return new Response(JSON.stringify(placeholderResponse), {
+    return new Response(JSON.stringify(chatResponse), {
       headers: { 'Content-Type': 'application/json' },
     });
   },
