@@ -2,6 +2,7 @@ import { Env } from './types';
 import { verifyApiKey } from './auth';
 import { calculateCost, deductBalance } from './billing';
 import { handleAdminRequest } from './admin';
+import { handleUserRequest } from './user_api';
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -10,6 +11,11 @@ export default {
     // Admin Routes
     if (url.pathname.startsWith('/admin/')) {
       return handleAdminRequest(request, env);
+    }
+
+    // User API Routes
+    if (url.pathname.startsWith('/api/')) {
+      return handleUserRequest(request, env);
     }
 
     if (url.pathname !== '/v1/chat/completions') {

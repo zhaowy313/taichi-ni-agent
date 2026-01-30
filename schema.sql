@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id TEXT PRIMARY KEY,
+  email TEXT UNIQUE,
+  password_hash TEXT,
   balance REAL DEFAULT 0.0,
   created_at INTEGER DEFAULT (unixepoch())
 );
