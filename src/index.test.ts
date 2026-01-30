@@ -1,8 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import worker from './index';
 import * as auth from './auth';
+import * as admin from './admin';
 
 vi.mock('./auth');
+vi.mock('./admin');
 
 describe('Worker Proxy', () => {
   const mockEnv = {
@@ -15,6 +17,15 @@ describe('Worker Proxy', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  it('should route /admin/* to handleAdminRequest', async () => {
+    vi.mocked(admin.handleAdminRequest).mockResolvedValue(new Response('Admin'));
+    const request = new Request('http://localhost/admin/users');
+    const response = await worker.fetch(request, mockEnv, mockCtx);
+    expect(response.status).toBe(200);
+    expect(await response.text()).toBe('Admin');
+    expect(admin.handleAdminRequest).toHaveBeenCalled();
   });
 
   it('should return 401 if Authorization header is missing', async () => {
