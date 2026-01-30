@@ -6,7 +6,7 @@ This plan outlines the steps to build and verify the OpenClawd integration.
 - [x] Task: Create Skill Directory Structure. bd4ae10
     - [ ] Create `skills/taichi-ni-bridge/` directory.
     - [ ] Create `SKILL.md` with metadata (name, description, triggers).
-- [ ] Task: Implement Command Handling & Key Storage.
+- [x] Task: Implement Command Handling & Key Storage. 9347333
     - [ ] Create `bridge.js` skeleton.
     - [ ] Implement logic to detect `/setkey` command.
     - [ ] Store API key in user context/state.
