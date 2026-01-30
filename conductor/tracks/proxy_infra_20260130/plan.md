@@ -16,7 +16,7 @@ This plan outlines the steps to build the proxy shell and billing system using C
     - [ ] Extract `usage` data from the AI response.
     - [ ] Calculate cost based on predefined rates.
     - [ ] Update user balance in D1 transactionally.
-- [ ] Task: Implement balance checks and error responses.
+- [x] Task: Implement balance checks and error responses. 2d3ce90
     - [ ] Add pre-request check to ensure user has minimum required balance.
     - [ ] Return 402 status code if balance is insufficient.
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Billing & Token Tracking' (Protocol in workflow.md)
