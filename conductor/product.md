@@ -18,6 +18,7 @@ To build a companion-style TaiChi training and Ni Haixia lifestyle advice agent 
 
 ## Core Features
 - **Key & Balance Management:** Automated API key generation and real-time balance tracking stored in Cloudflare D1.
+- **Self-Service Dashboard:** A web-based user dashboard for registration, login, and self-service API key management.
 - **Edge Billing Logic:** Real-time token counting and balance deduction implemented within a Cloudflare Worker for minimal latency.
 - **OpenClawd Bridge:** A specialized skill for OpenClawd to handle message routing, user state, and payment/recharge prompts.
 

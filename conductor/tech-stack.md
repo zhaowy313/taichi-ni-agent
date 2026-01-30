@@ -2,7 +2,10 @@
 
 ## Core Runtime & Language
 - **Platform:** [Cloudflare Workers](https://workers.cloudflare.com/) - Edge computing platform for low-latency request handling.
+- **Frontend:** [Next.js](https://nextjs.org/) - React-based framework for the user dashboard, deployed on Cloudflare Pages.
 - **Language:** [TypeScript](https://www.typescriptlang.org/) - Ensuring type safety and better developer experience for the proxy and billing logic.
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/) - For rapid and consistent UI development.
+- **Authentication:** [JWT](https://jwt.io/) (via `jose`) - Secure user sessions for the dashboard.
 
 ## AI Infrastructure
 - **Proxy Shell:** [Cloudflare AI Gateway](https://developers.cloudflare.com/ai-gateway/) - For observability, caching, rate limiting, and unified API access.
