@@ -2,19 +2,15 @@
 
 ## Phase 1: Retrieval Logic
 - [x] Task: Implement `retrieveContext` function. 63824d5
-    - [ ] Generate embedding for query.
-    - [ ] Query Vectorize index.
-    - [ ] Filter/Sort results (if necessary) and extract text.
 - [x] Task: Update `handleUserRequest` / `fetch` to use retrieval. a232617
-    - [ ] Modify `src/index.ts` to call retrieval before generating response.
-    - [ ] Log retrieved documents for debugging (temporarily).
 
-## Phase 2: LLM Integration
+## Phase 2: LLM Integration (Multi-Provider)
 - [x] Task: Construct System Prompt. 19b8840
-    - [ ] Create a template function that combines system instructions, retrieved context, and user query.
-- [ ] Task: Integrate Workers AI (Qwen 2.5).
-    - [ ] Replace placeholder response with actual `env.AI.run` call.
-    - [ ] Map AI response to OpenAI format.
+- [ ] Task: Implement Multi-Provider Routing Logic.
+    - [ ] Create `src/llm_gateway.ts` to handle routing via CF AI Gateway.
+    - [ ] Implement `callProvider(provider, model, messages)` function.
+    - [ ] Support OpenAI, Gemini, and DeepSeek (via custom fetch or CF Gateway Universal Endpoint).
+    - [ ] Update `src/index.ts` to use this new logic instead of `env.AI`.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: LLM Integration' (Protocol in workflow.md)
 
 ## Phase 3: Refinement
