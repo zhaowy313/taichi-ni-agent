@@ -1,4 +1,5 @@
 import { Env } from './types';
+import { generateEmbedding } from './ai';
 
 export async function handleAdminRequest(request: Request, env: Env): Promise<Response> {
   const secret = request.headers.get('X-Admin-Key');
@@ -37,6 +38,25 @@ export async function handleAdminRequest(request: Request, env: Env): Promise<Re
       .bind(amount, user_id)
       .run();
     return new Response(JSON.stringify({ success: true }), { status: 200 });
+  }
+
+  if (url.pathname === '/admin/ingest' && request.method === 'POST') {
+    const { text, metadata } = await request.json() as { text: string; metadata: any };
+    
+    if (!text) {
+      return new Response('Missing text', { status: 400 });
+    }
+
+    const embedding = await generateEmbedding(text, env);
+    
+    // Vectorize insert
+    const inserted = await env.VECTORIZE_INDEX.insert([{
+      id: crypto.randomUUID(),
+      values: embedding,
+      metadata: { ...metadata, text } // Store text in metadata for retrieval
+    }]);
+
+    return new Response(JSON.stringify({ success: true, count: inserted.count }), { status: 200 });
   }
 
   return new Response('Not Found', { status: 404 });
