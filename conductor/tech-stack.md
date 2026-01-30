@@ -9,7 +9,8 @@
 
 ## AI Infrastructure
 - **Proxy Shell:** [Cloudflare AI Gateway](https://developers.cloudflare.com/ai-gateway/) - For observability, caching, rate limiting, and unified API access.
-- **Inference:** [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) - Utilizing **Qwen 2.5 70b** as the base model.
+- **Inference Strategy:** **Multi-Provider Frontier Models** via AI Gateway.
+- **Supported Providers:** OpenAI, Google Gemini, DeepSeek.
 - **API Standard:** OpenAI-compatible `/v1/chat/completions` endpoint.
 - **Vector Database:** [Cloudflare Vectorize](https://developers.cloudflare.com/vectorize/) - For storing and retrieving knowledge embeddings.
 - **Embeddings Model:** `@cf/baai/bge-m3` - For generating high-quality vector representations of text.

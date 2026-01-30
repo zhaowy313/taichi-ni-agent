@@ -22,6 +22,7 @@ To build a companion-style TaiChi training and Ni Haixia lifestyle advice agent 
 - **Self-Service Dashboard:** A web-based user dashboard for registration, login, and self-service API key management.
 - **Edge Billing Logic:** Real-time token counting and balance deduction implemented within a Cloudflare Worker for minimal latency.
 - **OpenClawd Bridge:** A specialized skill for OpenClawd to handle message routing, user state, and payment/recharge prompts.
+- **Multi-Model Support:** Flexible routing to top-tier models (OpenAI, Gemini, DeepSeek) chosen by the user or admin.
 - **Authoritative Knowledge Base:** A vector-searchable repository of Tai Chi manuals and Ni Haixia transcripts for grounded AI responses.
 
 ## Success Metrics
