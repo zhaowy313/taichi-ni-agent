@@ -1,10 +1,16 @@
 import { Env } from './types';
 import { verifyApiKey } from './auth';
 import { calculateCost, deductBalance } from './billing';
+import { handleAdminRequest } from './admin';
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
+
+    // Admin Routes
+    if (url.pathname.startsWith('/admin/')) {
+      return handleAdminRequest(request, env);
+    }
 
     if (url.pathname !== '/v1/chat/completions') {
       return new Response('Not Found', { status: 404 });
