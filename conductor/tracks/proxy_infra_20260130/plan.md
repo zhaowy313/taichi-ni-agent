@@ -7,7 +7,7 @@ This plan outlines the steps to build the proxy shell and billing system using C
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Environment & Schema Setup' (Protocol in workflow.md) b478232
 
 ## Phase 2: Authentication & Proxy Core
-- [ ] Task: Implement API Key verification logic.
+- [x] Task: Implement API Key verification logic. 79ee5f1
     - [ ] Write utility to hash incoming keys and check against KV/D1.
     - [ ] Create middleware to intercept requests and validate the `Authorization` header.
 - [ ] Task: Implement the OpenAI-compatible proxy shell.
