@@ -13,6 +13,7 @@ To build a companion-style TaiChi training and Ni Haixia lifestyle advice agent 
 
 ## MVP Goals
 - **API Proxy Shell:** Establish a functional OpenAI-compatible proxy shell using Cloudflare AI Gateway to route requests to backend models.
+- **RAG Infrastructure:** Set up a knowledge-based retrieval system using Cloudflare Vectorize to provide authoritative Tai Chi and Ni Haixia lifestyle advice.
 - **Billing & Management:** Implement a robust API key management (`sk-taichi-`) and token-based billing system using Cloudflare D1 and KV.
 - **Ecosystem Integration:** Successfully integrate the agent as a functional "Skill" within the OpenClawd ecosystem.
 
@@ -21,6 +22,7 @@ To build a companion-style TaiChi training and Ni Haixia lifestyle advice agent 
 - **Self-Service Dashboard:** A web-based user dashboard for registration, login, and self-service API key management.
 - **Edge Billing Logic:** Real-time token counting and balance deduction implemented within a Cloudflare Worker for minimal latency.
 - **OpenClawd Bridge:** A specialized skill for OpenClawd to handle message routing, user state, and payment/recharge prompts.
+- **Authoritative Knowledge Base:** A vector-searchable repository of Tai Chi manuals and Ni Haixia transcripts for grounded AI responses.
 
 ## Success Metrics
 - **User Engagement:** High retention rates driven by the value of personalized, companion-style health advice.

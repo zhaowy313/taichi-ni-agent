@@ -9,8 +9,10 @@
 
 ## AI Infrastructure
 - **Proxy Shell:** [Cloudflare AI Gateway](https://developers.cloudflare.com/ai-gateway/) - For observability, caching, rate limiting, and unified API access.
-- **Inference (MVP):** [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) - Utilizing models like `@cf/meta/llama-3.3-70b-instruct` as initial backend placeholders.
+- **Inference:** [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) - Utilizing **Qwen 2.5 70b** as the base model.
 - **API Standard:** OpenAI-compatible `/v1/chat/completions` endpoint.
+- **Vector Database:** [Cloudflare Vectorize](https://developers.cloudflare.com/vectorize/) - For storing and retrieving knowledge embeddings.
+- **Embeddings Model:** `@cf/baai/bge-m3` - For generating high-quality vector representations of text.
 
 ## Data & Billing
 - **Relational Data:** [Cloudflare D1](https://developers.cloudflare.com/d1/) - Storing user accounts, hashed API keys, and balance history.
