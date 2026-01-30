@@ -2,14 +2,10 @@
 
 This plan outlines the steps to build and deploy the user dashboard.
 
-## Phase 1: API Extensions for User Access
+## Phase 1: API Extensions for User Access [checkpoint: 14cd145]
 - [x] Task: Design User API. fe979e4
-    -   Define endpoints: `POST /login`, `GET /me` (balance, key), `POST /me/key` (generate).
 - [x] Task: Implement User Authentication Logic. 58ab74c
-    -   Update `users` table to store password hash (or handle magic links).
-    -   Create `src/user_api.ts` to handle user-facing routes.
-    -   Implement JWT issuance for user sessions.
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: API Extensions for User Access' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: API Extensions for User Access' (Protocol in workflow.md) 14cd145
 
 ## Phase 2: Frontend Implementation
 - [ ] Task: Initialize Next.js Project.
