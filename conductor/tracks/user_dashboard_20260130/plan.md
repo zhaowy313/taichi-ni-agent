@@ -14,7 +14,7 @@ This plan outlines the steps to build and deploy the user dashboard.
 - [x] Task: Implement Login Page. 941220b
     -   Create form for email/password.
     -   Connect to `POST /login` API.
-- [ ] Task: Implement Dashboard Home.
+- [x] Task: Implement Dashboard Home. 69c8a7b
     -   Fetch user data from `GET /me`.
     -   Display balance and key.
     -   Implement "Generate Key" button.
