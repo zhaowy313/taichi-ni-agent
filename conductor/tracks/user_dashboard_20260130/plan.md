@@ -11,7 +11,7 @@ This plan outlines the steps to build and deploy the user dashboard.
 - [x] Task: Initialize Next.js Project. b0c2190
     -   Scaffold a new Next.js app in `dashboard/`.
     -   Configure Tailwind CSS.
-- [ ] Task: Implement Login Page.
+- [x] Task: Implement Login Page. 941220b
     -   Create form for email/password.
     -   Connect to `POST /login` API.
 - [ ] Task: Implement Dashboard Home.
