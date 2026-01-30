@@ -23,3 +23,22 @@ export async function retrieveContext(query: string, env: Env): Promise<string[]
     .map(match => match.metadata?.text as string)
     .filter(text => !!text);
 }
+
+export function constructSystemPrompt(context: string[]): string {
+  const contextText = context.length > 0 
+    ? context.map(text => `- ${text}`).join('\n')
+    : '(No relevant context found)';
+
+  return `
+You are a Tai Chi master and expert in Ni Haixia's TCM philosophy.
+Your goal is to provide sage, encouraging, and authoritative advice on Tai Chi training and wellness.
+
+Context:
+${contextText}
+
+Instructions:
+1. Use the provided context to answer the user's question.
+2. If the answer is not in the context, politely admit you do not know, but you can offer general encouragement based on Tai Chi principles if appropriate. Do not make up medical advice.
+3. Keep your tone calm, wise, and supportive.
+`.trim();
+}
