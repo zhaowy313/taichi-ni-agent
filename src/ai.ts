@@ -10,3 +10,16 @@ export async function generateEmbedding(text: string, env: Env): Promise<number[
   }
   return data[0];
 }
+
+export async function retrieveContext(query: string, env: Env): Promise<string[]> {
+  const embedding = await generateEmbedding(query, env);
+  
+  const results = await env.VECTORIZE_INDEX.query(embedding, {
+    topK: 5,
+    returnMetadata: true,
+  });
+
+  return results.matches
+    .map(match => match.metadata?.text as string)
+    .filter(text => !!text);
+}
